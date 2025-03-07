@@ -6,7 +6,7 @@ function App() {
   const [greeting, setGreeting] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const API_URL = "http://localhost:5000";
 
   const fetchGreeting = async () => {
     if (!name.trim()) {
@@ -35,18 +35,23 @@ function App() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              fetchGreeting();
+            }
+          }}
           placeholder="Your Name"
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
         />
 
+
         <button
           onClick={fetchGreeting}
           disabled={loading}
-          className={`w-full px-6 py-2 rounded-lg transition duration-200 ${
-            loading
+          className={`w-full px-6 py-2 rounded-lg transition duration-200 ${loading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-500 hover:bg-blue-600 text-white"
-          }`}
+            }`}
         >
           {loading ? "Loading..." : "Get Greeting"}
         </button>
